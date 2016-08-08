@@ -1,0 +1,28 @@
+{
+  "name": "mastery-exercise-modern-javascript-daynewright",
+  "version": "1.0.0",
+  "description": "## Setup",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nss-day-cohort-15/mastery-exercise-modern-javascript-daynewright.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nss-day-cohort-15/mastery-exercise-modern-javascript-daynewright/issues"
+  },
+  "homepage": "https://github.com/nss-day-cohort-15/mastery-exercise-modern-javascript-daynewright#readme",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.13.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-jshint": "^2.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "jshint": "^2.9.2"
+  }
+}
