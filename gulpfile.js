@@ -1,9 +1,11 @@
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
-var concat = require('gulp-concat');
+var gulpConcat = require('gulp-concat');
 var rename = require('gulp-rename');
 var cleanCSS = require('gulp-clean-css');
+var babel = require('gulp-babel');
+
 
 /////////  ERROR CALLBACK   /////////
 function errorLog(err){
@@ -25,14 +27,15 @@ var files = {
 // Lint task for JS source files
  gulp.task('lint', () =>
     gulp.src(files.js.scripts)
-      .pipe(jshint())
+      .pipe(jshint({'esversion': 6}))
       .pipe(jshint.reporter('default'), {verbose: true})
  );
 
 // Concat and minification for final DOM files
  gulp.task('concat-uglify-scripts-js', () =>
     gulp.src(files.js.scripts)
-      .pipe(concat('temp.js'))
+      .pipe(gulpConcat('temp.js'))
+			.pipe(babel({presets: ['es2015']}))
       .pipe(uglify())
       .on('error', errorLog)
       .pipe(rename('script.min.js'))
@@ -41,7 +44,7 @@ var files = {
 
  gulp.task('concat-uglify-vender-js', () =>
     gulp.src(files.js.vender)
-      .pipe(concat('tempVender.js'))
+      .pipe(gulpConcat('tempVender.js'))
       .pipe(uglify())
       .on('error', errorLog)
       .pipe(rename('vender.min.js'))
@@ -50,7 +53,7 @@ var files = {
 
 gulp.task('concat-uglify-styles-css', () =>
     gulp.src(files.css.styles)
-      .pipe(concat('temp.css'))
+      .pipe(gulpConcat('temp.css'))
       .pipe(cleanCSS({'keepSpecialComments' : 0}))
       .on('error', errorLog)
       .pipe(rename('style.min.css'))
@@ -59,7 +62,7 @@ gulp.task('concat-uglify-styles-css', () =>
 
 gulp.task('concat-uglify-vender-css', () =>
     gulp.src(files.css.vender)
-      .pipe(concat('tempVender.css'))
+      .pipe(gulpConcat('tempVender.css'))
       .pipe(cleanCSS({'keepSpecialComments' : 0}))
       .on('error',errorLog)
       .pipe(rename('vender.min.css'))
@@ -67,9 +70,10 @@ gulp.task('concat-uglify-vender-css', () =>
 );
 
 
-// /////////  RUN TASKS   /////////
-//  gulp.task('watch', () =>
-//    gulp.watch(files.jsScripts, ['lint']);
-//  );
+/////////  RUN TASKS   /////////
+ gulp.task('watch', () => {
+   gulp.watch(files.js.scripts, ['lint']);
+	 gulp.watch('src/app/**/*', ['build']);
+ });
 
  gulp.task('build', ['concat-uglify-scripts-js', 'concat-uglify-vender-js', 'concat-uglify-styles-css', 'concat-uglify-vender-css']);
