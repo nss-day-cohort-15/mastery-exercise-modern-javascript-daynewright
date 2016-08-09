@@ -13,7 +13,7 @@ Thumbs.db
 ######################
 
 node_modules/
-lib/ 
+lib/
 *.css.map
 build/
 dist/
