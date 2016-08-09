@@ -12,22 +12,26 @@ function errorLog(err){
 }
 
 var files = {
-    jsScripts : 'src/js/**/*.js',
-    jsVender  : ['src/lib/jquery/dist/jquery.min.js','src/lib/bootstrap/dist/js/bootstrap.min.js'],
-    cssFiles  : 'src/css/**/*.css',
-    cssVender : 'src/lib/bootstrap/dist/css/bootstrap.min.css'
+		 js : {
+			 scripts : 'src/js/**/*.js',
+			 vender  : ['src/lib/jquery/dist/jquery.min.js','src/lib/bootstrap/dist/js/bootstrap.min.js']
+		 },
+		 css : {
+			 styles : 'src/css/**/*.css',
+			 vender : ['src/lib/bootstrap/dist/css/bootstrap.min.css']
+		 }
     }
 
 // Lint task for JS source files
  gulp.task('lint', () =>
-    gulp.src(files.jsScripts)
+    gulp.src(files.js.scripts)
       .pipe(jshint())
       .pipe(jshint.reporter('default'), {verbose: true})
  );
 
 // Concat and minification for final DOM files
- gulp.task('concat-uglify-scripts', () =>
-    gulp.src(files.jsScripts)
+ gulp.task('concat-uglify-scripts-js', () =>
+    gulp.src(files.js.scripts)
       .pipe(concat('temp.js'))
       .pipe(uglify())
       .on('error', errorLog)
@@ -35,8 +39,8 @@ var files = {
       .pipe(gulp.dest('src/app/js'))
  );
 
- gulp.task('concat-vender-js', () =>
-    gulp.src(files.jsVender)
+ gulp.task('concat-uglify-vender-js', () =>
+    gulp.src(files.js.vender)
       .pipe(concat('tempVender.js'))
       .pipe(uglify())
       .on('error', errorLog)
@@ -44,8 +48,8 @@ var files = {
       .pipe(gulp.dest('src/app/js'))
 );
 
-gulp.task('concat-uglify-css', () =>
-    gulp.src(files.cssFiles)
+gulp.task('concat-uglify-styles-css', () =>
+    gulp.src(files.css.styles)
       .pipe(concat('temp.css'))
       .pipe(cleanCSS({'keepSpecialComments' : 0}))
       .on('error', errorLog)
@@ -53,8 +57,8 @@ gulp.task('concat-uglify-css', () =>
       .pipe(gulp.dest('src/app/css'))
 );
 
-gulp.task('concat-vender-css', () =>
-    gulp.src(files.cssVender)
+gulp.task('concat-uglify-vender-css', () =>
+    gulp.src(files.css.vender)
       .pipe(concat('tempVender.css'))
       .pipe(cleanCSS({'keepSpecialComments' : 0}))
       .on('error',errorLog)
@@ -68,4 +72,4 @@ gulp.task('concat-vender-css', () =>
 //    gulp.watch(files.jsScripts, ['lint']);
 //  );
 
- gulp.task('build', ['concat-uglify-scripts', 'concat-vender-js', 'concat-uglify-css', 'concat-vender-css']);
+ gulp.task('build', ['concat-uglify-scripts-js', 'concat-uglify-vender-js', 'concat-uglify-styles-css', 'concat-uglify-vender-css']);
