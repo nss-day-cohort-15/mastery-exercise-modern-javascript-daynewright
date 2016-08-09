@@ -3,6 +3,7 @@ var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
+var cleanCSS = require('gulp-clean-css');
 
 /////////  ERROR CALLBACK   /////////
 function errorLog(err){
@@ -12,7 +13,9 @@ function errorLog(err){
 
 var files = {
     jsScripts : 'src/js/**/*.js',
-    jsVender  : ['src/lib/jquery/dist/jquery.min.js','src/lib/bootstrap/dist/js/bootstrap.min.js']
+    jsVender  : ['src/lib/jquery/dist/jquery.min.js','src/lib/bootstrap/dist/js/bootstrap.min.js'],
+    cssFiles  : 'src/css/**/*.css',
+    cssVender : 'src/lib/bootstrap/dist/css/bootstrap.min.css'
     }
 
 // Lint task for JS source files
@@ -32,18 +35,37 @@ var files = {
       .pipe(gulp.dest('src/app/js'))
  );
 
- gulp.task('concat-vender', () =>
+ gulp.task('concat-vender-js', () =>
     gulp.src(files.jsVender)
       .pipe(concat('tempVender.js'))
+      .pipe(uglify())
       .on('error', errorLog)
       .pipe(rename('vender.min.js'))
       .pipe(gulp.dest('src/app/js'))
 );
 
+gulp.task('concat-uglify-css', () =>
+    gulp.src(files.cssFiles)
+      .pipe(concat('temp.css'))
+      .pipe(cleanCSS({'keepSpecialComments' : 0}))
+      .on('error', errorLog)
+      .pipe(rename('style.min.css'))
+      .pipe(gulp.dest('src/app/css'))
+);
 
-/////////  RUN TASKS   /////////
- gulp.task('watch', () => {
-   gulp.watch(files.jsScripts, ['lint']);
- });
+gulp.task('concat-vender-css', () =>
+    gulp.src(files.cssVender)
+      .pipe(concat('tempVender.css'))
+      .pipe(cleanCSS({'keepSpecialComments' : 0}))
+      .on('error',errorLog)
+      .pipe(rename('vender.min.css'))
+      .pipe(gulp.dest('src/app/css'))
+);
 
- gulp.task('build', ['concat-uglify-scripts', 'concat-vender']);
+
+// /////////  RUN TASKS   /////////
+//  gulp.task('watch', () =>
+//    gulp.watch(files.jsScripts, ['lint']);
+//  );
+
+ gulp.task('build', ['concat-uglify-scripts', 'concat-vender-js', 'concat-uglify-css', 'concat-vender-css']);
