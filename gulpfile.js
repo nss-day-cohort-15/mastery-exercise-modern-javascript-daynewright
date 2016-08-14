@@ -5,6 +5,7 @@ var gulpConcat = require('gulp-concat');
 var rename = require('gulp-rename');
 var cleanCSS = require('gulp-clean-css');
 var babel = require('gulp-babel');
+var inject = require('gulp-inject');
 
 
 /////////  ERROR CALLBACK   /////////
@@ -14,15 +15,18 @@ function errorLog(err){
 }
 
 var files = {
-		 js : {
-			 scripts : 'src/js/**/*.js',
-			 vender  : ['src/lib/jquery/dist/jquery.min.js','src/lib/bootstrap/dist/js/bootstrap.min.js']
-		 },
-		 css : {
-			 styles : 'src/css/**/*.css',
-			 vender : ['src/lib/bootstrap/dist/css/bootstrap.min.css']
-		 }
-    }
+ js : {
+				 scripts : 'src/dev/js/**/*.js',
+				 vender  : ['src/lib/jquery/dist/jquery.min.js','src/lib/bootstrap/dist/js/bootstrap.min.js']
+			 },
+ css : {
+				 styles : 'src/dev/css/**/*.css',
+				 vender : ['src/lib/bootstrap/dist/css/bootstrap.min.css']
+			 },
+ html : {
+				 index : 'src/dev/index.html'
+			 }
+}
 
 // Lint task for JS source files
  gulp.task('lint', () =>
@@ -69,6 +73,23 @@ gulp.task('concat-uglify-vender-css', () =>
       .pipe(gulp.dest('src/app/css'))
 );
 
+gulp.task('copy-html', () =>
+		gulp.src(files.html.index)
+			.pipe(gulp.dest('src/app'))
+);
+
+gulp.task('insert-css-js-links', ['run-js-files', 'run-css-files', 'copy-html'], ()=> {
+		var sources = gulp.src(['src/app/js/*.js','src/app/css/*.css'], {read: false});
+
+		gulp.src('src/app/index.html')
+			.pipe(inject(sources, {ignorePath: 'src/app/', addRootSlash: false}))
+			.on('error', errorLog)
+			.pipe(gulp.dest('src/app'));
+});
+
+gulp.task('run-js-files', ['concat-uglify-vender-js', 'concat-uglify-scripts-js']);
+gulp.task('run-css-files', ['concat-uglify-vender-css', 'concat-uglify-styles-css']);
+
 
 /////////  RUN TASKS   /////////
  gulp.task('watch', () => {
@@ -76,4 +97,4 @@ gulp.task('concat-uglify-vender-css', () =>
 	 gulp.watch('src/app/**/*', ['build']);
  });
 
- gulp.task('build', ['concat-uglify-scripts-js', 'concat-uglify-vender-js', 'concat-uglify-styles-css', 'concat-uglify-vender-css']);
+ gulp.task('build', ['copy-html', 'insert-css-js-links']);
