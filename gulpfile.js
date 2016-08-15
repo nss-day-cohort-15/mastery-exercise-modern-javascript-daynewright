@@ -109,9 +109,8 @@ gulp.task('connect-dev', () =>
   connect.server({
     root: 'src',
 		port: 8081,
-    livereload: true,
-		index: 'src/dev/index.html'
-  })
+    livereload: true
+	})
 );
 gulp.task('changes-dev', () =>
 gulp.src('src/dev/**/*')
@@ -121,29 +120,9 @@ gulp.src('src/dev/**/*')
 
 ///////////////////////////////////////////////////////////
 
-//build connect server and changes
-gulp.task('connect-build', () =>
-  connect.server({
-    root: 'src/build',
-		port: 8082,
-    livereload: true
-  })
-);
-gulp.task('changes-build', () =>
-gulp.src('src/build/**/*')
-	.pipe(connect.reload())
-);
-//build connect server and changes
-
-///////////////////////////////////////////////////////////
-
 //watch changes > lint > reload
 gulp.task('watch-dev', () => {
 	 gulp.watch('src/dev/**/*', ['changes-dev']);
-});
-
-gulp.task('watch-build', () => {
-	 gulp.watch('src/dev/**/*', ['changes-build']);
 });
 
 ///////////////////////////////////////////////////////////
@@ -156,13 +135,10 @@ gulp.task('build-app', ['remove-html-comments']);
 
 /////////  RUN TASKS BELOW   /////////
 
-gulp.task('watch-reload-dev', ['connect-dev', 'watch-dev']);
-
-//must run build task first//
-gulp.task('watch-reload-build', ['connect-build', 'watch-build']);
+gulp.task('watch-reload', ['connect-dev', 'watch-dev']);
 
 //lint without watch
 gulp.task('lint', ['lint-js']);
 
-//final build without watch
+//final build
 gulp.task('build', ['insert-css-js-links-copy-html']);
