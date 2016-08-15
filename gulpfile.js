@@ -9,10 +9,6 @@ var babel = require('gulp-babel');
 var inject = require('gulp-inject');
 var series = require('stream-series');
 
-// //set livereload to listen by default
-// livereload({ start: true });
-
-
 /////////  ERROR CALLBACK   /////////
 function errorLog(err){
 	console.error(err.message);
@@ -99,7 +95,6 @@ gulp.task('insert-css-js-links-copy-html', ['run-js-files', 'run-css-files', 'co
       .pipe(jshint({'esversion': 6}))
       .pipe(jshint.reporter('default'), {verbose: true})
  );
-
 // Lint task for JS source files
 
 ///////////////////////////////////////////////////////////
@@ -129,7 +124,6 @@ gulp.task('watch-dev', () => {
 
 gulp.task('run-js-files', ['concat-uglify-vender-js', 'concat-uglify-scripts-js']);
 gulp.task('run-css-files', ['concat-uglify-vender-css', 'concat-uglify-styles-css']);
-gulp.task('build-app', ['remove-html-comments']);
 
 ///////////////////////////////////////////////////////////
 
