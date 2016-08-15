@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var connect = require('gulp-connect');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var gulpConcat = require('gulp-concat');
@@ -7,7 +8,9 @@ var cleanCSS = require('gulp-clean-css');
 var babel = require('gulp-babel');
 var inject = require('gulp-inject');
 var series = require('stream-series');
-//var removeHtmlComments = require('gulp-remove-html-comments');
+
+// //set livereload to listen by default
+// livereload({ start: true });
 
 
 /////////  ERROR CALLBACK   /////////
@@ -15,6 +18,8 @@ function errorLog(err){
 	console.error(err.message);
 	this.emit('end');
 }
+/////////  ERROR CALLBACK   /////////
+
 
 var files = {
     js: {
@@ -29,13 +34,6 @@ var files = {
         index: 'src/dev/index.html'
     }
 }
-
-// Lint task for JS source files
- gulp.task('lint-js', () =>
-    gulp.src(files.js.scripts)
-      .pipe(jshint({'esversion': 6}))
-      .pipe(jshint.reporter('default'), {verbose: true})
- );
 
 // Concat and minification for final DOM files
  gulp.task('concat-uglify-scripts-js', () =>
@@ -80,12 +78,6 @@ gulp.task('copy-html', () =>
 			.pipe(gulp.dest('src/build'))
 );
 
-// gulp.task('remove-html-comments', ['insert-css-js-links-copy-html'], () =>
-// 		gulp.src('src/build/*.html')
-// 			.pipe(removeHtmlComments())
-// 	 		.pipe(gulp.dest('src/build'))
-// );
-
 gulp.task('insert-css-js-links-copy-html', ['run-js-files', 'run-css-files', 'copy-html'], ()=> {
 		var jsMinVender = gulp.src('src/build/js/vender.min.js', {read: false});
 		var jsMinUser = gulp.src('src/build/js/script.min.js', {read: false});
@@ -99,15 +91,75 @@ gulp.task('insert-css-js-links-copy-html', ['run-js-files', 'run-css-files', 'co
 			.pipe(gulp.dest('src/build'));
 });
 
+///////////////////////////////////////////////////////////
+
+// Lint task for JS source files
+ gulp.task('lint-js', () =>
+    gulp.src(files.js.scripts)
+      .pipe(jshint({'esversion': 6}))
+      .pipe(jshint.reporter('default'), {verbose: true})
+ );
+
+// Lint task for JS source files
+
+///////////////////////////////////////////////////////////
+
+//dev connect server and changes
+gulp.task('connect-dev', () =>
+  connect.server({
+    root: 'src',
+		port: 8081,
+    livereload: true,
+		index: 'src/dev/index.html'
+  })
+);
+gulp.task('changes-dev', () =>
+gulp.src('src/dev/**/*')
+	.pipe(connect.reload())
+);
+//dev connect server and changes
+
+///////////////////////////////////////////////////////////
+
+//build connect server and changes
+gulp.task('connect-build', () =>
+  connect.server({
+    root: 'src/build',
+		port: 8082,
+    livereload: true
+  })
+);
+gulp.task('changes-build', () =>
+gulp.src('src/build/**/*')
+	.pipe(connect.reload())
+);
+//build connect server and changes
+
+///////////////////////////////////////////////////////////
+
+//watch changes > lint > reload
+gulp.task('watch-dev', () => {
+	 gulp.watch('src/dev/**/*', ['changes-dev']);
+});
+
+gulp.task('watch-build', () => {
+	 gulp.watch('src/dev/**/*', ['changes-build']);
+});
+
+///////////////////////////////////////////////////////////
+
 gulp.task('run-js-files', ['concat-uglify-vender-js', 'concat-uglify-scripts-js']);
 gulp.task('run-css-files', ['concat-uglify-vender-css', 'concat-uglify-styles-css']);
 gulp.task('build-app', ['remove-html-comments']);
 
-/////////  RUN FINAL TASKS   /////////
-gulp.task('watch', () => {
-   gulp.watch(files.js.scripts, ['lint-js']);
-	 gulp.watch('src/app/**/*', ['build']);
-});
+///////////////////////////////////////////////////////////
+
+/////////  RUN TASKS BELOW   /////////
+
+gulp.task('watch-reload-dev', ['connect-dev', 'watch-dev']);
+
+//must run build task first//
+gulp.task('watch-reload-build', ['connect-build', 'watch-build']);
 
 //lint without watch
 gulp.task('lint', ['lint-js']);
