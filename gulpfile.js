@@ -116,9 +116,13 @@ gulp.src('src/dev/**/*')
 ///////////////////////////////////////////////////////////
 
 //watch changes > lint > reload
-gulp.task('watch-dev', () => {
-	 gulp.watch('src/dev/**/*', ['changes-dev']);
-});
+gulp.task('watch-dev', () =>
+	 gulp.watch('src/dev/**/*', ['changes-dev'])
+);
+
+gulp.task('watch-lint', () =>
+	gulp.watch('src/dev/js/**/*', ['lint-js'])
+);
 
 ///////////////////////////////////////////////////////////
 
@@ -129,7 +133,7 @@ gulp.task('run-css-files', ['concat-uglify-vender-css', 'concat-uglify-styles-cs
 
 /////////  RUN TASKS BELOW   /////////
 
-gulp.task('watch-reload', ['connect-dev', 'watch-dev']);
+gulp.task('watch-reload', ['connect-dev', 'watch-dev', 'watch-lint']);
 
 //lint without watch
 gulp.task('lint', ['lint-js']);
