@@ -1,4 +1,4 @@
-var Arena = (function(arena){
+let Arena = (function(arena){
 
   let robotComp = new arena.Robots.Comp();
   let robotPlayer = new arena.Robots();

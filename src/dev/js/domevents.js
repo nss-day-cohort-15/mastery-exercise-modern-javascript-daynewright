@@ -1,10 +1,20 @@
 
 $(document).ready(function(){
-  var player = Arena.getRobotPlayer();
-  var comp = Arena.getRobotComp();
-  var startingHealth = [player.health, comp.health];
-  var buildDOM = ``;
 
+  //get selections
+  const playerName = $('#player-name').val();
+
+
+
+
+
+  //get players
+  const player = Arena.getRobotPlayer();
+  const comp = Arena.getRobotComp();
+
+  //populate dom
+  const startingHealth = [player.health, comp.health];
+  let buildDOM = ``;
 
   [player, comp].forEach((e,i) => {
     buildDOM += (

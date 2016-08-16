@@ -116,6 +116,14 @@ gulp.task('insert-css-js-links-copy-html', ['run-js-files', 'run-css-files','cop
  );
 // Lint task for JS source files
 
+// Babel task for JS source files
+ gulp.task('babel-js',() =>
+    gulp.src(files.js.scripts)
+      .pipe(babel({presets: ['es2015']}))
+      .pipe(gulp.dest('src/dev/babel'))
+ );
+ // Babel task for JS source files
+
 ///////////////////////////////////////////////////////////
 
 //dev connect server and changes
@@ -140,7 +148,11 @@ gulp.task('watch-dev', () =>
 );
 
 gulp.task('watch-lint', () =>
-	gulp.watch('src/dev/js/**/*', ['lint-js'])
+	gulp.watch(files.js.scripts, ['lint-js'])
+);
+
+gulp.task('watch-babel', () =>
+  gulp.watch(files.js.scripts, ['babel-js'])
 );
 
 ///////////////////////////////////////////////////////////
@@ -153,7 +165,7 @@ gulp.task('run-css-files', ['concat-uglify-vender-css', 'concat-uglify-styles-cs
 /////////  RUN TASKS BELOW   /////////
 
 //watch and reload with lint
-gulp.task('watch-reload', ['connect-dev', 'watch-dev', 'watch-lint']);
+gulp.task('watch-reload', ['connect-dev', 'watch-dev', 'watch-lint', 'watch-babel']);
 
 //lint
 gulp.task('lint', ['lint-js']);
