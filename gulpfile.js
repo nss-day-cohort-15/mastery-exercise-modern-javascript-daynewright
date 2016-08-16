@@ -36,18 +36,18 @@ var files = {
 // Concat and minification for final DOM files
  gulp.task('concat-uglify-scripts-js', () =>
     gulp.src(files.js.scripts)
-		  .pipe(babel({presets: ['es2015']}))
-			.pipe(order([
-				'robot.js',
-				'drone.js',
-				'bipedal.js',
-				'atv.js',
-				'weapons.js',
-				'setup.js',
-				'domevents.j',
-				'**/*.js'
-			]))
-			.on('error',errorLog)
+  	  .pipe(babel({presets: ['es2015']}))
+  		.pipe(order([
+  			'robot.js',
+  			'drone.js',
+  			'bipedal.js',
+  			'atv.js',
+  			'weapons.js',
+  			'setup.js',
+  			'domevents.j',
+  			'**/*.js'
+  		]))
+  		.on('error',errorLog)
       .pipe(gulpConcat('temp.js'))
       .pipe(uglify())
       .on('error', errorLog)
