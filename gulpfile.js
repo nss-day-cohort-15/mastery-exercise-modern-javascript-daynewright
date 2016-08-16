@@ -1,13 +1,15 @@
-var gulp = require('gulp');
-var connect = require('gulp-connect');
-var jshint = require('gulp-jshint');
-var uglify = require('gulp-uglify');
-var gulpConcat = require('gulp-concat');
-var rename = require('gulp-rename');
-var cleanCSS = require('gulp-clean-css');
-var babel = require('gulp-babel');
-var inject = require('gulp-inject');
-var series = require('stream-series');
+const gulp = require('gulp'),
+      connect = require('gulp-connect'),
+      jshint = require('gulp-jshint'),
+      uglify = require('gulp-uglify'),
+      gulpConcat = require('gulp-concat'),
+      order = require('gulp-order'),
+      rename = require('gulp-rename'),
+      cleanCSS = require('gulp-clean-css'),
+      babel = require('gulp-babel'),
+      inject = require('gulp-inject'),
+      series = require('stream-series'),
+      imagemin = require('gulp-imagemin');
 
 /////////  ERROR CALLBACK   /////////
 function errorLog(err){
@@ -34,8 +36,19 @@ var files = {
 // Concat and minification for final DOM files
  gulp.task('concat-uglify-scripts-js', () =>
     gulp.src(files.js.scripts)
+		  .pipe(babel({presets: ['es2015']}))
+			.pipe(order([
+					'robot.js',
+					'drone.js',
+					'bipedal.js',
+					'atv.js',
+					'weapons.js',
+					'setup.js',
+					'domevents.j',
+					'**/*.js'
+			]))
+			.on('error',errorLog)
       .pipe(gulpConcat('temp.js'))
-			.pipe(babel({presets: ['es2015']}))
       .pipe(uglify())
       .on('error', errorLog)
       .pipe(rename('script.min.js'))
@@ -69,12 +82,18 @@ gulp.task('concat-uglify-vender-css', () =>
       .pipe(gulp.dest('src/build/css'))
 );
 
+gulp.task('copy-image-min', () =>
+    gulp.src('src/dev/images/*')
+      .pipe(imagemin())
+      .pipe(gulp.dest('src/build/images'))
+);
+
 gulp.task('copy-html', () =>
 		gulp.src(files.html.index)
 			.pipe(gulp.dest('src/build'))
 );
 
-gulp.task('insert-css-js-links-copy-html', ['run-js-files', 'run-css-files', 'copy-html'], ()=> {
+gulp.task('insert-css-js-links-copy-html', ['run-js-files', 'run-css-files','copy-image-min', 'copy-html'], ()=> {
 		var jsMinVender = gulp.src('src/build/js/vender.min.js', {read: false});
 		var jsMinUser = gulp.src('src/build/js/script.min.js', {read: false});
 		var cssMinVender = gulp.src('src/build/css/vender.min.css', {read: false});
