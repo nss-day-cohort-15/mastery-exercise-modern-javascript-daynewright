@@ -38,14 +38,14 @@ var files = {
     gulp.src(files.js.scripts)
 		  .pipe(babel({presets: ['es2015']}))
 			.pipe(order([
-					'robot.js',
-					'drone.js',
-					'bipedal.js',
-					'atv.js',
-					'weapons.js',
-					'setup.js',
-					'domevents.j',
-					'**/*.js'
+				'robot.js',
+				'drone.js',
+				'bipedal.js',
+				'atv.js',
+				'weapons.js',
+				'setup.js',
+				'domevents.j',
+				'**/*.js'
 			]))
 			.on('error',errorLog)
       .pipe(gulpConcat('temp.js'))
@@ -89,8 +89,8 @@ gulp.task('copy-image-min', () =>
 );
 
 gulp.task('copy-html', () =>
-		gulp.src(files.html.index)
-			.pipe(gulp.dest('src/build'))
+  	gulp.src(files.html.index)
+  		.pipe(gulp.dest('src/build'))
 );
 
 gulp.task('insert-css-js-links-copy-html', ['run-js-files', 'run-css-files','copy-image-min', 'copy-html'], ()=> {
@@ -152,9 +152,10 @@ gulp.task('run-css-files', ['concat-uglify-vender-css', 'concat-uglify-styles-cs
 
 /////////  RUN TASKS BELOW   /////////
 
+//watch and reload with lint
 gulp.task('watch-reload', ['connect-dev', 'watch-dev', 'watch-lint']);
 
-//lint without watch
+//lint
 gulp.task('lint', ['lint-js']);
 
 //final build

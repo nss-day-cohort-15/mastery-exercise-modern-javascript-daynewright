@@ -1,13 +1,15 @@
 var Arena = (function(arena){
 
-  var robotComp = new arena.Robots.Comp();
+  let robotComp = new arena.Robots.Comp();
+  let robotPlayer = new arena.Robots();
 
-  var robotPlayer = new arena.Robots();
+  //test function
+  robotPlayer.type = new arena.Robots.OffRoadATV();
+  robotPlayer.getWeapon('ATV');
 
-  console.log(robotComp);
-  console.log(robotPlayer);
 
   arena.getRobotComp = () => robotComp;
+  arena.getRobotPlayer = () => robotPlayer;
 
   return arena;
 
