@@ -9,25 +9,32 @@ var Arena = (function(arena){
   };
 
 
-  arena.Robots.prototype.randomType = function(){
-    var random = Math.round(Math.random()* (this.types.length -1));
-    var randomType = this.types[random];
+  arena.Robots.prototype.setType = function(type){
 
-    this.type = new arena.Robots[randomType]();
+    if(!type){
+      var random = Math.round(Math.random()* (this.types.length -1));
+      type = this.types[random];
+    }
+
+    this.type = new arena.Robots[type]();
 
     return this.type;
   };
 
-  arena.Robots.prototype.getWeapon = function(type){
+  arena.Robots.prototype.getWeapon = function(type, selectedWeapon){
 
+  if(type !== null){
     var weaponTypes = {
       'Drone': { 0: 'FlyAttack', 1: 'PropellerSlice'},
       'Bipedal': {0:'Punch', 1:'LazerBeams'},
       'ATV': {0:'Crush', 1:'JumpAttack'}
     };
-    var selectedWeapon = weaponTypes[type][Math.floor(Math.random() * 2)];
-
+    selectedWeapon = weaponTypes[type][Math.floor(Math.random() * 2)];
+  }
     this.weapon = new arena.Arsonal[selectedWeapon]();
+
+    console.log(this);
+
     return this.weapon;
   };
 
@@ -36,7 +43,7 @@ var Arena = (function(arena){
     var name = names[Math.floor(Math.random() * names.length)];
 
     this.name = name;
-    this.type = this.randomType();
+    this.type = this.setType();
     this.weapon = this.getWeapon(this.type.typeCategory);
   };
   arena.Robots.Comp.prototype = new arena.Robots();

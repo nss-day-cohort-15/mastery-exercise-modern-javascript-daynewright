@@ -6,6 +6,7 @@
         <title>Robot Wars</title>
         <!-- inject:css -->
         <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../lib/sweetalert2/dist/sweetalert2.min.css">
         <link rel="stylesheet" href="css/style.css">
         <!-- endinject -->
     </head>
@@ -17,9 +18,9 @@
                     <div class="col-md-6 col-md-offset-3">
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label for="robotName">Name You Robot:
+                                <label for="player-name">Name You Robot:
                                 </label>
-                                <input type="text" class="form-control" id="robotName" placeholder="Voltron">
+                                <input type="text" class="form-control" id="player-name" placeholder="Voltron">
                             </div>
                             <div class="form-group">
                                 <label for="name">Select Your Robot Type:</label>
@@ -49,7 +50,7 @@
                     </div>
                 </div>
             </section>
-            <section class="row hide">
+            <section class="row">
                 <h1>The BattleField</h1>
                 <div id="battle" class="col-md-12"></div>
                 <button type="button" class="btn btn-danger btn-lg btn-block">ATTACK!</button>
@@ -57,6 +58,7 @@
         </article>
         <!-- inject:js -->
         <script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../lib/sweetalert2/dist/sweetalert2.min.js"></script>
         <script type="text/javascript" src="babel/robot.js"></script>
         <script type="text/javascript" src="babel/drone.js"></script>
         <script type="text/javascript" src="babel/bipedal.js"></script>

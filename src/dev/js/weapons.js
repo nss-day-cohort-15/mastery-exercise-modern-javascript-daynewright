@@ -1,4 +1,4 @@
-var Arena = (function(arena){
+let Arena = (function(arena){
   arena.Arsonal = {};
 
   arena.Arsonal.Weapon = function(){
