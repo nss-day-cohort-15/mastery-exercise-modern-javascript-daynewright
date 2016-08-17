@@ -1,0 +1,85 @@
+
+.img-thumbnail {
+  width: 500px;
+  height: 300px;
+  object-fit: contain;
+}
+
+.btn-block {
+    width: 30%;
+    margin: 0 auto;
+}
+
+button, input {
+  outline: none !important;
+}
+
+span {
+  font-weight: 900;
+}
+
+.hide {
+  display: none;
+}
+
+h1 {
+  text-align: center;
+}
+
+#battle {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+#selections {
+  margin-top: 100px;
+}
+
+
+
+/*flash the health when it changes */
+.flash{
+  animation-name: health-fade;
+  animation-duration: 1000ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+
+@keyframes health-fade {
+    0% {
+        background-color: transparent;
+        opacity:1;
+    }
+    25% {
+        background-color: red;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+/* Shake image on attack */
+.shake{
+  animation: image-shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes image-shake {
+  10%, 90% {
+    transform: translate3d(-3px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(4px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-8px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(8px, 0, 0);
+  }
+}

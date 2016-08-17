@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Robot Wars</title>
+        <!-- inject:css -->
+        <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../lib/sweetalert2/dist/sweetalert2.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <!-- endinject -->
+    </head>
+    <body>
+        <article class="container">
+            <section class="row">
+                <h1>Create Your Robot</h1>
+                <div id="selections">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="player-name">Name You Robot:
+                                </label>
+                                <input type="text" class="form-control" id="player-name" placeholder="Voltron">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Select Your Robot Type:</label>
+                                <select class="form-control">
+                                    <option disabled selected>Select One</option>
+                                    <optgroup label="ATV Robots:">
+                                        <option value="OffRoadATV-ATV">Off Road</option>
+                                        <option value="TankATV-ATV">Tank</option>
+                                    </optgroup>
+                                    <optgroup label="Bipedal Robots:">
+                                        <option value="Topio-Bipedal">Topio</option>
+                                        <option value="Nao-Bipedal">Nao</option>
+                                    </optgroup>
+                                    <optgroup label="Drone Robots:">
+                                        <option value="PhoneDrone-Drone">Phone</option>
+                                        <option value="ParrotDrone-Drone">Parrot</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Select Your Robot Weapon:</label>
+                                <select id="weapon-options" class="form-control">
+                                </select>
+                            </div>
+                            <button id="create-player" type="submit" class="btn btn-success btn-lg btn-block">Create Robot</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <section class="row">
+                <h1>The BattleField</h1>
+                <div id="battle" class="col-md-12"></div>
+                <button id="attack" type="button" class="btn btn-danger btn-lg btn-block">ATTACK!</button>
+            </section>
+        </article>
+        <!-- inject:js -->
+        <script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../lib/sweetalert2/dist/sweetalert2.min.js"></script>
+        <script type="text/javascript" src="babel/robot.js"></script>
+        <script type="text/javascript" src="babel/drone.js"></script>
+        <script type="text/javascript" src="babel/bipedal.js"></script>
+        <script type="text/javascript" src="babel/atv.js"></script>
+        <script type="text/javascript" src="babel/weapons.js"></script>
+        <script type="text/javascript" src="babel/attack.js"></script>
+        <script type="text/javascript" src="babel/setup.js"></script>
+        <script type="text/javascript" src="babel/domevents.js"></script>
+        <!-- endinject -->
+    </body>
+</html>
