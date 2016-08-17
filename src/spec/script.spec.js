@@ -41,18 +41,18 @@ describe("A Computer Robot should return these:", function () {
   var comp = new Arena.Robots.Comp();
 
   it('a computer robot is created', function(){
-    expect(robot).toBeDefined();
+    expect(comp).toBeDefined();
   });
 
   it("a computer robot should have a name", function () {
-    expect(robot.name).toBeDefined();
+    expect(comp.name).toBeDefined();
   });
 
   it("a computer robot should have health", function () {
-    expect(robot.health).toBeDefined();
+    expect(comp.health).toBeDefined();
   });
 
   it("a computer robot should have a weapon", function () {
-    expect(robot.weapon).toBeDefined();
+    expect(comp.weapon).toBeDefined();
   });
 });
