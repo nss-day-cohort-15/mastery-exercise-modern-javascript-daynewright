@@ -16,4 +16,3 @@ Thumbs.db
 node_modules/
 lib/
 src/build/
-src/dev/babel/
