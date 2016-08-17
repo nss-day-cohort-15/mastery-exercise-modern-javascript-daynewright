@@ -4,33 +4,30 @@ var Arena = (function(arena){
   arena.Robots = function(){
     this.types = ['OffRoadATV', 'TankATV', 'Topio', 'Nao', 'PhoneDrone', 'ParrotDrone'];
     this.weapon = null;
-    this.health = Math.floor(Math.random() * 50 + 10);
+    this.health = Math.floor(Math.random() * 50 + 100);
     this.name = `Robot ${Math.floor(Math.random() * 500 + 100)}`;
   };
 
 
   arena.Robots.prototype.setType = function(type){
-
     if(!type){
       var random = Math.round(Math.random()* (this.types.length -1));
       type = this.types[random];
     }
-
     this.type = new arena.Robots[type]();
 
     return this.type;
   };
 
   arena.Robots.prototype.getWeapon = function(type, selectedWeapon){
-
-  if(type !== null){
-    var weaponTypes = {
-      'Drone': { 0: 'FlyAttack', 1: 'PropellerSlice'},
-      'Bipedal': {0:'Punch', 1:'LazerBeams'},
-      'ATV': {0:'Crush', 1:'JumpAttack'}
-    };
-    selectedWeapon = weaponTypes[type][Math.floor(Math.random() * 2)];
-  }
+    if(type !== null){
+      var weaponTypes = {
+        'Drone': { 0: 'FlyAttack', 1: 'PropellerSlice'},
+        'Bipedal': {0:'Punch', 1:'LazerBeams'},
+        'ATV': {0:'Crush', 1:'JumpAttack'}
+      };
+      selectedWeapon = weaponTypes[type][Math.floor(Math.random() * 2)];
+    }
     this.weapon = new arena.Arsonal[selectedWeapon]();
 
     console.log(this);
@@ -48,9 +45,6 @@ var Arena = (function(arena){
   };
   arena.Robots.Comp.prototype = new arena.Robots();
 
-  // arena.Robots.prototype.attack = (enemyRobot) => {
-  //   //define attack functionality
-  // };
 
   return arena;
 
