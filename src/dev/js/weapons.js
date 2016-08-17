@@ -1,4 +1,4 @@
-let Arena = (function(arena){
+var Arena = (function(arena){
   arena.Arsonal = {};
 
   arena.Arsonal.Weapon = function(){
@@ -37,21 +37,21 @@ let Arena = (function(arena){
   arena.Arsonal.LazerBeams.prototype = new arena.Arsonal.Weapon();
 
   //ATV attacks
-    arena.Arsonal.Crush = function(){
-      this.name = 'Crush';
-      this.AllowedType = 'ATV';
-      this.damage = this.damage + 12;
-    };
-    arena.Arsonal.Crush.prototype = new arena.Arsonal.Weapon();
+  arena.Arsonal.Crush = function(){
+    this.name = 'Crush';
+    this.AllowedType = 'ATV';
+    this.damage = this.damage + 12;
+  };
+  arena.Arsonal.Crush.prototype = new arena.Arsonal.Weapon();
 
-    arena.Arsonal.JumpAttack = function(){
-      this.name = 'Jump Attack';
-      this.AllowedType = 'ATV';
-      this.damage = this.damage + 17;
-    };
-    arena.Arsonal.JumpAttack.prototype = new arena.Arsonal.Weapon();
+  arena.Arsonal.JumpAttack = function(){
+    this.name = 'Jump Attack';
+    this.AllowedType = 'ATV';
+    this.damage = this.damage + 17;
+  };
+  arena.Arsonal.JumpAttack.prototype = new arena.Arsonal.Weapon();
 
 
-  return arena;
+return arena;
 
 })(Arena || {});
