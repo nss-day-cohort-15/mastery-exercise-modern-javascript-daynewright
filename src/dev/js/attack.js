@@ -1,18 +1,18 @@
 var Arena = (function(arena){
 
-arena.Robots.prototype.attack = (enemyObj) => {
+arena.Robots.prototype.attack = function(enemyObj){
     var randomDamage = Math.ceil(Math.random() * this.weapon.damage);
       enemyObj.health = enemyObj.health - randomDamage;
 
       var enemyId = (this === arena.getRobotPlayer()) ? 1 : 0;
 
+      arena.buildDomElements();
+
       var $health = $(`#health-${enemyId}`);
       var $image = $(`#image-${enemyId}`);
 
-      arena.buildDomElements();
-
-      $health.addClass('flash');
-      $image.addClass('shake');
+      $($health[0]).addClass('flash');
+      $($image[0]).addClass('shake');
 
       swal({
         title:`${this.name} attacks!`,
@@ -25,7 +25,7 @@ arena.Robots.prototype.attack = (enemyObj) => {
 
       if(arena.getRobotPlayer().health <= 0){youLose();}
       if(arena.getRobotComp().health <= 0){youWin();}
-    }
+    };
 
   function youWin(){
     swal({
@@ -43,7 +43,7 @@ arena.Robots.prototype.attack = (enemyObj) => {
   function youLose(){
     swal({
       title: "You lose!",
-      text: "Oh no...You lost!",
+      text: "Oh no...Your robot is no more!",
       type: "error",
       showCancelButton: false,
       showConfirmButton: false,

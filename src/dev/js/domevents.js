@@ -112,7 +112,7 @@ var Arena = (function(arena){
       });
 
       $('#battle').html(buildDOM);
-    }
+    };
 
   });
 

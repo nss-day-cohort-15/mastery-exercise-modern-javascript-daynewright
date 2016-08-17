@@ -3,24 +3,22 @@
 var Arena = function (arena) {
 
   arena.Robots.prototype.attack = function (enemyObj) {
-    var _this = this;
-
-    var randomDamage = Math.ceil(Math.random() * _this.weapon.damage);
+    var randomDamage = Math.ceil(Math.random() * this.weapon.damage);
     enemyObj.health = enemyObj.health - randomDamage;
 
-    var enemyId = _this === arena.getRobotPlayer() ? 1 : 0;
+    var enemyId = this === arena.getRobotPlayer() ? 1 : 0;
+
+    arena.buildDomElements();
 
     var $health = $('#health-' + enemyId);
     var $image = $('#image-' + enemyId);
 
-    arena.buildDomElements();
-
-    $health.addClass('flash');
-    $image.addClass('shake');
+    $($health[0]).addClass('flash');
+    $($image[0]).addClass('shake');
 
     swal({
-      title: _this.name + ' attacks!',
-      html: '<span class="bold">' + enemyObj.name + '</span> was attacked <br />by <span class="bold">' + _this.name + '</span> with <span class="bold">' + _this.weapon.name + '</span><br />causing <span class="red bold">' + randomDamage + ' damage</span>!',
+      title: this.name + ' attacks!',
+      html: '<span class="bold">' + enemyObj.name + '</span> was attacked <br />by <span class="bold">' + this.name + '</span> with <span class="bold">' + this.weapon.name + '</span><br />causing <span class="red bold">' + randomDamage + ' damage</span>!',
       type: "warning",
       showCancelButton: false,
       showConfirmButton: false,
@@ -50,7 +48,7 @@ var Arena = function (arena) {
   function youLose() {
     swal({
       title: "You lose!",
-      text: "Oh no...You lost!",
+      text: "Oh no...Your robot is no more!",
       type: "error",
       showCancelButton: false,
       showConfirmButton: false,
