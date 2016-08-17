@@ -22,11 +22,11 @@ function errorLog(err){
 var files = {
     js: {
         scripts: 'src/dev/js/**/*.js',
-        vender: ['src/lib/jquery/dist/jquery.min.js', 'src/lib/bootstrap/dist/js/bootstrap.min.js']
+        vender: ['src/lib/jquery/dist/jquery.min.js', 'src/lib/bootstrap/dist/js/bootstrap.min.js', 'src/lib/sweetalert2/dist/sweetalert2.min.js']
     },
     css: {
         styles: 'src/dev/css/**/*.css',
-        vender: ['src/lib/bootstrap/dist/css/bootstrap.min.css']
+        vender: ['src/lib/bootstrap/dist/css/bootstrap.min.css', 'src/lib/sweetalert2/dist/sweetalert2.min.css']
     },
     html: {
         index: 'src/dev/index.html'
